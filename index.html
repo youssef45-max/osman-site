@@ -1,98 +1,84 @@
+from pathlib import Path
+from zipfile import ZipFile
+
+# محتوى ملف index.html
+html_content = """
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8" />
-  <title>المؤسس عثمان - الحلقات المدبلجة</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <title>المؤسس عثمان - الحلقات 74 إلى 90</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      direction: rtl;
+      background: #121212;
+      color: white;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #1f1f1f;
+      padding: 20px;
+      font-size: 24px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+    .episode-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+    }
+    .episode-card {
+      background-color: #222;
+      margin: 10px;
+      padding: 20px;
+      width: 260px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(229,9,20,0.4);
+      transition: transform 0.3s;
+    }
+    .episode-card:hover {
+      transform: scale(1.05);
+    }
+    .episode-card h3 {
+      margin-bottom: 10px;
+    }
+    .episode-card a {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #e50914;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+    .episode-card a:hover {
+      background: #b00610;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>📺 المؤسس عثمان - الحلقات المدبلجة</h1>
-  </header>
-
-  <section class="episode-card">
-    <h3>الحلقة 74</h3>
-    <a href="https://www.dailymotion.com/video/x8as3co?playlist=x7g4n7" target="_blank">مشاهدة الآن</a>
-  </section>
-
-  <section class="episode-card">
-    <h3>الحلقة 75</h3>
-    <a href="https://www.dailymotion.com/video/x8as3cq?playlist=x7g4n7" target="_blank">مشاهدة الآن</a>
-  </section>
-
-  <section class="episode-card">
-    <h3>الحلقة 76</h3>
-    <a href="https://www.dailymotion.com/video/x8as3cr?playlist=x7g4n7" target="_blank">مشاهدة الآن</a>
-  </section>
-
-  <section class="episode-card">
-    <h3>الحلقة 77</h3>
-    <a href="https://www.dailymotion.com/video/x8b8sc2?playlist=x7g4n7" target="_blank">مشاهدة الآن</a>
-  </section>
-
-  <section class="episode-card">
-    <h3>الحلقة 78</h3>
-    <a href="https://www.dailymotion.com/video/x8b8sc3?playlist=x7g4n7" target="_blank">مشاهدة الآن</a>
-  </section>
-
-  <section class="episode-card">
-    <h3>الحلقة 79</h3>
-    <a href="https://www.dailymotion.com/video/x8b8sc4?playlist=x7g4n7" target="_blank">مشاهدة الآن</a>
-  </section>
-
-  <section class="episode-card">
-    <h3>الحلقة 80</h3>
-    <a href="https://www.dailymotion.com/video/x8b8s9a?playlist=x7g4n7" target="_blank">مشاهدة الآن</a>
-  </section>
-
-  <section class="episode-card">
-    <h3>الحلقة 81</h3>
-    <a href="https://www.dailymotion.com/video/x8b8s9q?playlist=x7g4n7" target="_blank">مشاهدة الآن</a>
-  </section>
-
-  <section class="episode-card">
-    <h3>الحلقة 82</h3>
-    <a href="https://www.dailymotion.com/video/x8b8s9b?playlist=x7g4n7" target="_blank">مشاهدة الآن</a>
-  </section>
-
-  <section class="episode-card">
-    <h3>الحلقة 83</h3>
-    <a href="https://www.dailymotion.com/video/x8b8s9e?playlist=x7g4n7" target="_blank">مشاهدة الآن</a>
-  </section>
-
-  <section class="episode-card">
-    <h3>الحلقة 84</h3>
-    <a href="https://www.dailymotion.com/video/x8b8s9g?playlist=x7g4n7" target="_blank">مشاهدة الآن</a>
-  </section>
-
-  <section class="episode-card">
-    <h3>الحلقة 85</h3>
-    <a href="https://www.dailymotion.com/video/x8b8s9h?playlist=x7g4n7" target="_blank">مشاهدة الآن</a>
-  </section>
-
-  <section class="episode-card">
-    <h3>الحلقة 86</h3>
-    <a href="https://www.dailymotion.com/video/x8b8s9j?playlist=x7g4n7" target="_blank">مشاهدة الآن</a>
-  </section>
-
-  <section class="episode-card">
-    <h3>الحلقة 87</h3>
-    <a href="https://www.dailymotion.com/video/x8b8s9l?playlist=x7g4n7" target="_blank">مشاهدة الآن</a>
-  </section>
-
-  <section class="episode-card">
-    <h3>الحلقة 88</h3>
-    <a href="https://www.dailymotion.com/video/x8b8s9o?playlist=x7g4n7" target="_blank">مشاهدة الآن</a>
-  </section>
-
-  <section class="episode-card">
-    <h3>الحلقة 89</h3>
-    <a href="https://www.dailymotion.com/video/x8b8s9q?playlist=x7g4n7" target="_blank">مشاهدة الآن</a>
-  </section>
-
-  <section class="episode-card">
-    <h3>الحلقة 90</h3>
-    <a href="https://www.dailymotion.com/video/x8b8s9t?playlist=x7g4n7" target="_blank">مشاهدة الآن</a>
-  </section>
+  <header>📺 المؤسس عثمان - الحلقات المدبلجة (74 - 90)</header>
+  <div class="episode-container">
+    <div class="episode-card"><h3>الحلقة 74</h3><a href="https://www.dailymotion.com/video/x8as3co?playlist=x7g4n7" target="_blank">مشاهدة الآن</a></div>
+    <div class="episode-card"><h3>الحلقة 75</h3><a href="https://www.dailymotion.com/video/x8as3cq?playlist=x7g4n7" target="_blank">مشاهدة الآن</a></div>
+    <div class="episode-card"><h3>الحلقة 76</h3><a href="https://www.dailymotion.com/video/x8as3cr?playlist=x7g4n7" target="_blank">مشاهدة الآن</a></div>
+    <div class="episode-card"><h3>الحلقة 77</h3><a href="https://www.dailymotion.com/video/x8b8sc2?playlist=x7g4n7" target="_blank">مشاهدة الآن</a></div>
+    <div class="episode-card"><h3>الحلقة 78</h3><a href="https://www.dailymotion.com/video/x8b8sc3?playlist=x7g4n7" target="_blank">مشاهدة الآن</a></div>
+    <div class="episode-card"><h3>الحلقة 79</h3><a href="https://www.dailymotion.com/video/x8b8sc4?playlist=x7g4n7" target="_blank">مشاهدة الآن</a></div>
+    <div class="episode-card"><h3>الحلقة 80</h3><a href="https://www.dailymotion.com/video/x8b8s9a?playlist=x7g4n7" target="_blank">مشاهدة الآن</a></div>
+    <div class="episode-card"><h3>الحلقة 81</h3><a href="https://www.dailymotion.com/video/x8b8s9b?playlist=x7g4n7" target="_blank">مشاهدة الآن</a></div>
+    <div class="episode-card"><h3>الحلقة 82</h3><a href="https://www.dailymotion.com/video/x8b8s9e?playlist=x7g4n7" target="_blank">مشاهدة الآن</a></div>
+    <div class="episode-card"><h3>الحلقة 83</h3><a href="https://www.dailymotion.com/video/x8b8s9g?playlist=x7g4n7" target="_blank">مشاهدة الآن</a></div>
+    <div class="episode-card"><h3>الحلقة 84</h3><a href="https://www.dailymotion.com/video/x8b8s9h?playlist=x7g4n7" target="_blank">مشاهدة الآن</a></div>
+    <div class="episode-card"><h3>الحلقة 85</h3><a href="https://www.dailymotion.com/video/x8b8s9j?playlist=x7g4n7" target="_blank">مشاهدة الآن</a></div>
+    <div class="episode-card"><h3>الحلقة 86</h3><a href="https://www.dailymotion.com/video/x8b8s9l?playlist=x7g4n7" target="_blank">مشاهدة الآن</a></div>
+    <div class="episode-card"><h3>الحلقة 87</h3><a href="https://www.dailymotion.com/video/x8b8s9o?playlist=x7g4n7" target="_blank">مشاهدة الآن</a></div>
+    <div class="episode-card"><h3>الحلقة 88</h3><a href="https://www.dailymotion.com/video/x8b8s9q?playlist=x7g4n7" target="_blank">مشاهدة الآن</a></div>
+    <div class="episode-card"><h3>الحلقة 89</h3><a href="https://www.dailymotion.com/video/x8b8s9t?playlist=x7g4n7" target="_blank">مشاهدة الآن</a></div>
+    <div class="episode-card"><h3>الحلقة 90</h3><a href="https://www.dailymotion.com/video/x8b8s9x?playlist=x7g4n7" target="_blank">مشاهدة الآن</a></div>
+  </div>
 </body>
 </html>
